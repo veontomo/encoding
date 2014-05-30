@@ -13,7 +13,9 @@ class m140530_071158_create_table_symbol extends \yii\db\Migration
     		 'html'  => 'CHAR(10) UNIQUE',
     		 'dec'  => 'CHAR(8) UNIQUE',
     		 'hex'  => 'CHAR(8) UNIQUE',
-    		 'descr' => 'VARCHAR(100)']);
+    		 'descr' => 'VARCHAR(100)',
+             'ProtettiHtml' => 'TINYINT(1) NOT NULL',
+             'NoHtml' => 'TINYINT(1) NOT NULL']);
     	echo "Table $this->tableName is created." . PHP_EOL;
     }
 
