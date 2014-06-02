@@ -8,6 +8,7 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\db\Query;
 
 /**
  * SymbolController implements the CRUD actions for Symbol model.
@@ -61,9 +62,31 @@ class SymbolController extends Controller
     public function actionCreate()
     {
         $model = new Symbol;
+        $post = Yii::$app->request->post();
+        if (array_key_exists('Symbol', $post)){
+            $attrs = $model->attributeLabels();
+            foreach ($attrs as $attr => $value) {
+                if (array_key_exists($attr, $post['Symbol']) && $post['Symbol'][$attr] == ''){
+                    $post['Symbol'][$attr] = null;
+                }
+            }
+        }
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load($post)) {
+            if ($model->save()){
+                $idToInsert = [];
+                $key = 'category';  // key name corresponding to checked categories in the post array 
+                if (array_key_exists($key, $post)){
+                    $categoryIds = $post[$key];
+                    if ($categoryIds){
+                        foreach ($categoryIds as $categoryId => $value) {
+                            $idToInsert[] = $categoryId;
+                        }
+                    }
+                }
+                $model->setLinksToCategories($idToInsert);
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -80,16 +103,39 @@ class SymbolController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $post = Yii::$app->request->post();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if (array_key_exists('Symbol', $post)){
+            $attrs = $model->attributeLabels();
+            foreach ($attrs as $attr => $value) {
+                if (array_key_exists($attr, $post['Symbol']) && $post['Symbol'][$attr] == ''){
+                    $post['Symbol'][$attr] = null;
+                }
+            }
+        }
+
+        if ($model->load($post)) {
+            // print_r($post);
+            // die();
+            if ($model->save()){
+                $idToInsert = [];
+                $key = 'category';  // key name corresponding to checked categories in the post array 
+                if (array_key_exists($key, $post)){
+                    $categoryIds = $post[$key];
+                    
+                    if ($categoryIds){
+                        foreach ($categoryIds as $categoryId => $value) {
+                            $idToInsert[] = $categoryId;
+                        }
+                    }
+                }
+                $model->setLinksToCategories($idToInsert);
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
-            $allCats = $model->getAllCategories();
-            $symbCats = $model->getCategories();
             return $this->render('update', [
-                'model' => $model,
-                'categories' => $allCats,
-                'symbolCats' => $symbCats
+                'model' => $model
             ]);
         }
     }
@@ -102,8 +148,18 @@ class SymbolController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        $id = $model->id;
 
+        if (isset($id)){
+            /// remove records from category_symbol table
+            Yii::$app->db->createCommand('
+                DELETE FROM category_symbol WHERE 
+                symbol_id = :sId', [
+                    ':sId' => $id
+            ])->execute();
+            $model->delete();
+        }
         return $this->redirect(['index']);
     }
 

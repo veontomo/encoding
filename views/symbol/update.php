@@ -7,7 +7,7 @@ use yii\helpers\Html;
  * @var app\models\Symbol $model
  */
 
-$this->title = 'Update Symbol: ' . ' ' . $model->id;
+$this->title = 'Update glyph: ' . ' ' . $model->symbol;
 $this->params['breadcrumbs'][] = ['label' => 'Symbols', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Update';
@@ -17,9 +17,7 @@ $this->params['breadcrumbs'][] = 'Update';
     <h1><?= Html::encode($this->title) ?></h1>
 
     <?= $this->render('_form', [
-        'model' => $model,
-        'categories' => $categories,
-        'symbolCats' => $symbolCats
+        'model' => $model
     ]) ?>
 
 

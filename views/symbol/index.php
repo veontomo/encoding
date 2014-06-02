@@ -29,6 +29,17 @@ $this->params['breadcrumbs'][] = $this->title;
             'dec',
             'hex',
             'descr',
+             [
+                'label' => 'Category',
+                'value' => function ($model, $key, $index, $widget) {
+                    
+                    // return implode(' ',  ['index = ', $index, 
+                    //     'key = ', $key, 'modelId = ', $model->id,
+                    //     ]);
+                    return $model->categoriesString();
+                }
+            ],
+            // ['attribute' => 'amount', 'value'],
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>

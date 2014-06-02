@@ -2,6 +2,9 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+// use kartik\widgets\ActiveForm;
+// use kartik\builder\Form;
+
 
 /**
  * @var yii\web\View $this
@@ -24,21 +27,13 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'descr')->textInput(['maxlength' => 100]) ?>
 
-    <?php
-        if (isset($categories)){
-            foreach ($categories as $cat) {
-                echo Html::checkboxList('CuisineId',$list2,$list);
-            }
-        } else {
-            echo 'categories are not set' . PHP_EOL;
+    <?php 
+        foreach ($model->getAllCategories() as $cat) {
+            $id = $cat->id;
+            echo Html::checkbox("category[$id]", $model->hasCategory($id), ['label' => $cat->name]);
         }
-        if (isset($symbolCats)){
-            echo 'current categories are set'. PHP_EOL;
-        } else {
-            echo 'current categories are not set'. PHP_EOL;
-        }
+        
     ?>
-
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>

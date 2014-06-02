@@ -38,6 +38,10 @@ $this->params['breadcrumbs'][] = $this->title;
             'dec',
             'hex',
             'descr',
+             [
+                'label' => 'Category',
+                'value' => $model->categoriesString()
+            ],
         ],
     ]) ?>
 
