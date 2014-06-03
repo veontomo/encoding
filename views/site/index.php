@@ -2,7 +2,6 @@
 /**
  * @var yii\web\View $this
  */
-defined('YII_DEBUG') or define('YII_DEBUG', false);
 $this->title = 'Codifica caratteri';
 ?>
 <div class="site-index">
@@ -15,7 +14,7 @@ $this->title = 'Codifica caratteri';
 
         <div class="row">
             <div class="col-lg-4">
-                <h2>Come funziona</h2>
+                <h2>Che cosa &egrave;</h2>
 
                 <p>Tramite questa applicatione si pu&ograve; inserire codifiche <em>html</em>, <em>hex</em> e <em>dec</em>
                     dei caratteri.
@@ -32,7 +31,7 @@ $this->title = 'Codifica caratteri';
                         pi&ugrave; precisa elaborazione degli spazi nelle codifice html e rappresentazioni a video dei glifi.
                     </li>
                     <li>
-                        ...
+                        Se una categoria va eliminata, togliere collegamenti da tutti i simboli ad essa.
                     </li>
                 </ol>
 
