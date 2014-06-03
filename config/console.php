@@ -23,6 +23,23 @@ return [
             ],
         ],
         'db' => $db,
+        'user' => [
+           'class' => 'amnah\yii2\user\components\User',
+        ],
+        'mail' => [
+            'class' => 'yii\swiftmailer\Mailer',
+            'useFileTransport' => true,
+            'messageConfig' => [
+                'from' => ['admin@website.com' => 'Admin'], // this is needed for sending emails
+                'charset' => 'UTF-8',
+            ]
+        ]
     ],
     'params' => $params,
+    'modules' => [
+        'user' => [
+            'class' => 'amnah\yii2\user\Module',
+            // set custom module properties here ...
+        ],
+    ]
 ];

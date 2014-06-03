@@ -10,10 +10,10 @@ $config = [
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
-        'user' => [
-            'identityClass' => 'app\models\User',
-            'enableAutoLogin' => true,
-        ],
+        // 'user' => [
+        //     'identityClass' => 'app\models\User',
+        //     'enableAutoLogin' => true,
+        // ],
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
@@ -31,8 +31,25 @@ $config = [
             ],
         ],
         'db' => require(__DIR__ . '/db.php'),
+        'user' => [
+                   'class' => 'amnah\yii2\user\components\User',
+        ],
+       'mail' => [
+           'class' => 'yii\swiftmailer\Mailer',
+           'useFileTransport' => true,
+           'messageConfig' => [
+               'from' => ['a.shcherbakov@ritoll.it' => 'Codifica caratteri'], // this is needed for sending emails
+               'charset' => 'UTF-8',
+           ]
+       ]
     ],
     'params' => $params,
+    'modules' => [
+        'user' => [
+            'class' => 'amnah\yii2\user\Module',
+            // set custom module properties here ...
+        ],
+    ]
 ];
 
 if (YII_ENV_DEV) {

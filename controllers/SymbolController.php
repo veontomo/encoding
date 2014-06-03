@@ -9,6 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\db\Query;
+use yii\filters\AccessControl;
 
 /**
  * SymbolController implements the CRUD actions for Symbol model.
@@ -24,7 +25,43 @@ class SymbolController extends Controller
                     'delete' => ['post'],
                 ],
             ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true, // Has access
+                        'roles' => ['@'], // '@' All logged in users / or your access role e.g. 'admin', 'user'
+                    ],
+                    [
+                        'actions' => ['update', 'create'],
+                        'allow' => false, // Do not have access
+                        'roles'=>['?'], // Guests '?'
+                    ],
+                    [
+                        'actions' => ['view', 'index'],
+                        'allow' => true,
+                        'roles'=>['?'], // Guests '?'
+                    ],
+                ],
+            ],
+
         ];
+        // return [
+        //          'access' => [
+        //              'class' => AccessControl::className(),
+        //              'rules' => [
+        //                  [
+        //                      // 'actions' => ['login', 'error'], // Define specific actions
+        //                      'allow' => true, // Has access
+        //                      'roles' => ['@'], // '@' All logged in users / or your access role e.g. 'admin', 'user'
+        //                  ],
+        //                  [
+        //                      'allow' => false, // Do not have access
+        //                      'roles'=>['?'], // Guests '?'
+        //                  ],
+        //              ],
+        //          ],
+        //      ];
     }
 
     /**
@@ -75,7 +112,7 @@ class SymbolController extends Controller
         if ($model->load($post)) {
             if ($model->save()){
                 $idToInsert = [];
-                $key = 'category';  // key name corresponding to checked categories in the post array 
+                $key = 'category';  // key name corresponding to checked categories in the post array
                 if (array_key_exists($key, $post)){
                     $categoryIds = $post[$key];
                     if ($categoryIds){
@@ -119,10 +156,10 @@ class SymbolController extends Controller
             // die();
             if ($model->save()){
                 $idToInsert = [];
-                $key = 'category';  // key name corresponding to checked categories in the post array 
+                $key = 'category';  // key name corresponding to checked categories in the post array
                 if (array_key_exists($key, $post)){
                     $categoryIds = $post[$key];
-                    
+
                     if ($categoryIds){
                         foreach ($categoryIds as $categoryId => $value) {
                             $idToInsert[] = $categoryId;
@@ -154,7 +191,7 @@ class SymbolController extends Controller
         if (isset($id)){
             /// remove records from category_symbol table
             Yii::$app->db->createCommand('
-                DELETE FROM category_symbol WHERE 
+                DELETE FROM category_symbol WHERE
                 symbol_id = :sId', [
                     ':sId' => $id
             ])->execute();

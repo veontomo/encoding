@@ -4,8 +4,52 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "a5c37a1d6262c1186e42706b0f46f7e6",
+    "hash": "151e89adf09b6a48ad923bd113c6d163",
     "packages": [
+        {
+            "name": "amnah/yii2-user",
+            "version": "2.1.0alpha",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/amnah/yii2-user.git",
+                "reference": "a4d982a98f857b0b06330eae218f9180e4e405ec"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/amnah/yii2-user/zipball/a4d982a98f857b0b06330eae218f9180e4e405ec",
+                "reference": "a4d982a98f857b0b06330eae218f9180e4e405ec",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2": "*",
+                "yiisoft/yii2-authclient": "*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "amnah\\yii2\\user\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "amnah",
+                    "email": "amnah.dev@gmail.com"
+                }
+            ],
+            "description": "Yii 2 user authentication module",
+            "keywords": [
+                "Authentication",
+                "auth",
+                "user",
+                "yii",
+                "yii2"
+            ],
+            "time": "2014-05-20 12:13:17"
+        },
         {
             "name": "cebe/markdown",
             "version": "0.9.x-dev",
@@ -338,6 +382,50 @@
                 "yii2"
             ],
             "time": "2014-05-30 05:55:17"
+        },
+        {
+            "name": "yiisoft/yii2-authclient",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/yiisoft/yii2-authclient.git",
+                "reference": "0732c919a71a1d53ee401b23bc1e60b92a35b25d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/yiisoft/yii2-authclient/zipball/0732c919a71a1d53ee401b23bc1e60b92a35b25d",
+                "reference": "0732c919a71a1d53ee401b23bc1e60b92a35b25d",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "yiisoft/yii2": "*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "yii\\authclient\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Paul Klimov",
+                    "email": "klimov.paul@gmail.com",
+                    "role": "Core framework development"
+                }
+            ],
+            "description": "External authentication via OAuth and OpenID for the Yii framework",
+            "keywords": [
+                "OpenId",
+                "auth",
+                "oauth",
+                "yii2"
+            ],
+            "time": "2014-05-30 09:55:28"
         },
         {
             "name": "yiisoft/yii2-bootstrap",

@@ -8,6 +8,7 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
  * CategoryController implements the CRUD actions for Category model.
@@ -23,6 +24,26 @@ class CategoryController extends Controller
                     'delete' => ['post'],
                 ],
             ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true, // Has access
+                        'roles' => ['@'], // '@' All logged in users / or your access role e.g. 'admin', 'user'
+                    ],
+                    [
+                        'actions' => ['update', 'create'],
+                        'allow' => false, // Do not have access
+                        'roles'=>['?'], // Guests '?'
+                    ],
+                    [
+                        'actions' => ['view', 'index'],
+                        'allow' => true,
+                        'roles'=>['?'], // Guests '?'
+                    ],
+                ],
+            ],
+
         ];
     }
 
