@@ -2,50 +2,46 @@
 /**
  * @var yii\web\View $this
  */
-$this->title = 'My Yii Application';
+defined('YII_DEBUG') or define('YII_DEBUG', false);
+$this->title = 'Codifica caratteri';
 ?>
 <div class="site-index">
 
     <div class="jumbotron">
-        <h1>Congratulations!</h1>
-
-        <p class="lead">You have successfully created your Yii-powered application.</p>
-
-        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
+        <h1>Codifica caratteri</h1>
     </div>
 
     <div class="body-content">
 
         <div class="row">
             <div class="col-lg-4">
-                <h2>Heading</h2>
+                <h2>Come funziona</h2>
 
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
+                <p>Tramite questa applicatione si pu&ograve; inserire codifiche <em>html</em>, <em>hex</em> e <em>dec</em>
+                    dei caratteri.
+                </p>
             </div>
             <div class="col-lg-4">
-                <h2>Heading</h2>
+                <h2>Da fare</h2>
+                <ol>
+                    <li>
+                        Aggiungere &quot;utenti&quot; per poter tener sotto controllo effettuate modifiche (la data,
+                        la locazione e l&apos;autore della modifica)
+                    </li>
+                    <li>
+                        pi&ugrave; precisa elaborazione degli spazi nelle codifice html e rappresentazioni a video dei glifi.
+                    </li>
+                    <li>
+                        ...
+                    </li>
+                </ol>
 
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>
             </div>
             <div class="col-lg-4">
-                <h2>Heading</h2>
+                <h2>Commenti</h2>
 
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
 
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
+
             </div>
         </div>
 
