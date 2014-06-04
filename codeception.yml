@@ -15,4 +15,5 @@ modules:
             dsn: ''
             user: ''
             password: ''
-            dump: tests/_data/dump.sql
+            dump: tests/_data/codifica.sql
+        Mink:
