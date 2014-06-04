@@ -42,7 +42,6 @@ class Symbol extends \yii\db\ActiveRecord
             [['html'], 'unique'],
             [['dec'], 'unique'],
             [['hex'], 'unique']
-
         ];
     }
 
@@ -63,6 +62,46 @@ class Symbol extends \yii\db\ActiveRecord
             'property' => 'Proprietà'
         ];
     }
+
+
+    /**
+     * Tracks changes (update/create)
+     * @param  string  $action   name of the actiopn performed
+     * @return void
+     */
+    public function afterSave($isNew){
+        $this->_saveLog($isNew ? Log::ACTION_INSERT : Log::ACTION_UPDATE);
+    }
+
+    /**
+     * Tracks changes (delete).
+     * @return bool
+     */
+    public function beforeDelete()
+    {
+        if (parent::beforeDelete()) {
+            return $this->_saveLog(Log::ACTION_DELETE);
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Saves info about changes (insert/update/delete) of current record into Log table.
+     * @param  string   $actionName   type of change ("insert", "update", "delete")
+     * @return bool
+     */
+    private function _saveLog($actionName)
+    {
+        $l = new Log();
+        $l->author  = Yii::$app->user->id;
+        $l->table = $this->tableName();
+        $l->action = $actionName;
+        $l->tableRowId = $this->id;
+        return $l->save();
+    }
+
+
 
     /**
      * Returns categories the symbol belongs to.

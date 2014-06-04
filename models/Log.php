@@ -18,6 +18,10 @@ use Yii;
  */
 class Log extends \yii\db\ActiveRecord
 {
+    const ACTION_INSERT = 'insert';
+    const ACTION_UPDATE = 'update';
+    const ACTION_DELETE = 'delete';
+
     /**
      * @inheritdoc
      */
@@ -26,13 +30,15 @@ class Log extends \yii\db\ActiveRecord
         return 'log';
     }
 
+
+
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['table', 'time'], 'required'],
+            [['table'], 'required'],
             [['tableRowId', 'author'], 'integer'],
             [['time'], 'safe'],
             [['table'], 'string', 'max' => 40],
@@ -47,11 +53,11 @@ class Log extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'table' => 'Table',
-            'tableRowId' => 'Table Row ID',
-            'time' => 'Time',
-            'author' => 'Author',
-            'action' => 'Action',
+            'table' => 'Tabella',
+            'tableRowId' => 'id riga',
+            'time' => 'ora',
+            'author' => 'autore',
+            'action' => 'azione',
         ];
     }
 
