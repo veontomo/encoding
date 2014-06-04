@@ -25,14 +25,18 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'hex')->textInput(['maxlength' => 8]) ?>
 
+    <?= $form->field($model, 'ProtettiHtml')->textInput(['maxlength' => 1]) ?>
+
+    <?= $form->field($model, 'NoHtml')->textInput(['maxlength' => 1]) ?>
+
     <?= $form->field($model, 'descr')->textInput(['maxlength' => 100]) ?>
 
-    <?php 
+    <?php
         foreach ($model->getAllCategories() as $cat) {
             $id = $cat->id;
             echo Html::checkbox("category[$id]", $model->hasCategory($id), ['label' => $cat->name]);
         }
-        
+
     ?>
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

@@ -42,6 +42,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label' => 'Category',
                 'value' => $model->categoriesString()
             ],
+            'ProtettiHtml',
+            'NoHtml',
+            'property'
         ],
     ]) ?>
 

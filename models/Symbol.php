@@ -13,6 +13,7 @@ use Yii;
  * @property string $dec
  * @property string $hex
  * @property string $descr
+ * @property string $ProtettiHtml
  *
  * @property CategorySymbol[] $categorySymbols
  */
@@ -36,6 +37,7 @@ class Symbol extends \yii\db\ActiveRecord
             [['html'], 'string', 'max' => 10],
             [['dec', 'hex'], 'string', 'max' => 8],
             [['descr'], 'string', 'max' => 100],
+            [['ProtettiHtml'], 'string', 'max' => 1],
             [['symbol'], 'unique'],
             [['html'], 'unique'],
             [['dec'], 'unique'],
@@ -56,6 +58,9 @@ class Symbol extends \yii\db\ActiveRecord
             'dec' => 'Dec code',
             'hex' => 'Hex code',
             'descr' => 'Description',
+            'ProtettiHtml' => 'Protetti Html',
+            'NoHtml' => 'No Html',
+            'property' => 'Proprietà'
         ];
     }
 
@@ -71,7 +76,7 @@ class Symbol extends \yii\db\ActiveRecord
     }
 
     /**
-     * Return a string with all categories the current symbol belongs to. 
+     * Return a string with all categories the current symbol belongs to.
      */
     public function categoriesString()
     {
@@ -83,7 +88,7 @@ class Symbol extends \yii\db\ActiveRecord
            $output[] = $cat->name;
         }
         return implode(', ', $output);
-    } 
+    }
 
 
     public function getAllCategories()
@@ -107,9 +112,9 @@ class Symbol extends \yii\db\ActiveRecord
     }
 
     /**
-    * Sets records in category_symbol table: 
-    * 1. removes all records having symbol_id equal to id of the current model, 
-    * 2. for each element in $arr, pairs it with the id of the current element and 
+    * Sets records in category_symbol table:
+    * 1. removes all records having symbol_id equal to id of the current model,
+    * 2. for each element in $arr, pairs it with the id of the current element and
     * inserts all these pairs into category_symbol table.
     * @return void
     */
@@ -119,7 +124,7 @@ class Symbol extends \yii\db\ActiveRecord
         $id = $this->id;
         // cleaning up table from records with given symbol_id
         Yii::$app->db->createCommand("
-            DELETE FROM $tableName WHERE symbol_id = :sId", 
+            DELETE FROM $tableName WHERE symbol_id = :sId",
             [':sId' => $id])->execute();
         // preparing data to insert
         $arrToInsert = [];

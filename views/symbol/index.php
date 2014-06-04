@@ -32,14 +32,17 @@ $this->params['breadcrumbs'][] = $this->title;
              [
                 'label' => 'Category',
                 'value' => function ($model, $key, $index, $widget) {
-                    
-                    // return implode(' ',  ['index = ', $index, 
+
+                    // return implode(' ',  ['index = ', $index,
                     //     'key = ', $key, 'modelId = ', $model->id,
                     //     ]);
                     return $model->categoriesString();
                 }
             ],
             // ['attribute' => 'amount', 'value'],
+            'ProtettiHtml',
+            'NoHtml',
+            'property',
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
