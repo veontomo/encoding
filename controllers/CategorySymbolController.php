@@ -32,9 +32,16 @@ class CategorySymbolController extends Controller
                         'roles' => ['?'],
                     ],
                     [
+                        'actions' => ['view', 'index'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
+                    [
+                        'actions' => ['create', 'delete'],
+                        'allow' => false,
+                        'roles' => ['@'],
+                    ],
+
                 ],
             ],
 

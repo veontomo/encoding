@@ -24,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'tableRowId',
             'time',
             'author',
-            // 'action',
+            'action',
             // ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
