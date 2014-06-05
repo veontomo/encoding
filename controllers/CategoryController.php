@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Category;
+use app\models\CategorySymbol;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -119,8 +120,15 @@ class CategoryController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
+        $model = $this->findModel($id);
+        // looking for references to the current category from CategorySymbol model
+        $links = CategorySymbol::find()->where('cat_id = :cId', [':cId' => $id])->all();
+        if ($links){
+            foreach ($links as $link) {
+                $link->delete();
+            }
+            $model->delete();
+        }
         return $this->redirect(['index']);
     }
 

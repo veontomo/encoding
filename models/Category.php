@@ -72,6 +72,7 @@ class Category extends \yii\db\ActiveRecord
     public function beforeDelete()
     {
         if (parent::beforeDelete()) {
+
             return $this->_saveLog(Log::ACTION_DELETE);
         } else {
             return false;

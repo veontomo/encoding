@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Symbol;
+use app\models\CategorySymbol;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -171,15 +172,12 @@ class SymbolController extends Controller
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
-        $id = $model->id;
-
-        if (isset($id)){
-            /// remove records from category_symbol table
-            Yii::$app->db->createCommand('
-                DELETE FROM category_symbol WHERE
-                symbol_id = :sId', [
-                    ':sId' => $id
-            ])->execute();
+        // looking for references to the current symbol from CategorySymbol model
+        $links = CategorySymbol::find()->where('symbol_id = :sId', [':sId' => $id])->all();
+        if ($links){
+            foreach ($links as $link) {
+                $link->delete();
+            }
             $model->delete();
         }
         return $this->redirect(['index']);

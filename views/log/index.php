@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use app\models;
+// use amnah\yii2\user\models;
 
 /**
  * @var yii\web\View $this
@@ -23,7 +25,13 @@ $this->params['breadcrumbs'][] = $this->title;
             'table',
             'tableRowId',
             'time',
-            'author',
+            [
+                'label' => 'autore',
+                'value' => function ($model, $key, $index, $widget) {
+                    return amnah\yii2\user\models\User::findIdentity($model->author)->username;
+                }
+            ],
+            // 'author',
             'action',
             // ['class' => 'yii\grid\ActionColumn'],
         ],
