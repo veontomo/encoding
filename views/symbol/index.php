@@ -19,9 +19,8 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Create Symbol', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'columns' => [
+    <?php
+        $cols  = [
             ['class' => 'yii\grid\SerialColumn'],
             // 'id',
             'symbol',
@@ -32,19 +31,21 @@ $this->params['breadcrumbs'][] = $this->title;
              [
                 'label' => 'Category',
                 'value' => function ($model, $key, $index, $widget) {
-
-                    // return implode(' ',  ['index = ', $index,
-                    //     'key = ', $key, 'modelId = ', $model->id,
-                    //     ]);
                     return $model->categoriesString();
                 }
             ],
-            // ['attribute' => 'amount', 'value'],
             'ProtettiHtml',
             'NoHtml',
-            'property',
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
+            'property'
+        ];
+        if (!Yii::$app->user->isGuest) {
+            $cols[] = ['class' => 'yii\grid\ActionColumn'];
+        }
+    ?>
+
+    <?= GridView::widget([
+        'dataProvider' => $dataProvider,
+        'columns' => $cols
     ]); ?>
 
 </div>

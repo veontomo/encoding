@@ -19,15 +19,22 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Create Category', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'columns' => [
+    <?php
+        $cols = [
             // ['class' => 'yii\grid\SerialColumn'],
             // 'id',
             'name',
             'descr',
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
+            // ['class' => 'yii\grid\ActionColumn'],
+        ];
+        if (!Yii::$app->user->isGuest) {
+            $cols[] = ['class' => 'yii\grid\ActionColumn'];
+        }
+    ?>
+
+    <?= GridView::widget([
+        'dataProvider' => $dataProvider,
+        'columns' => $cols,
     ]); ?>
 
 </div>
