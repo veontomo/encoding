@@ -1,4 +1,5 @@
 <?php
+use yii\helpers\Html;
 /**
  * @var yii\web\View $this
  */
@@ -24,20 +25,22 @@ $this->title = 'Codifica caratteri';
                 <h2>Da fare</h2>
                 <ol>
                     <li>
-                        Aggiungere &quot;utenti&quot; per poter tener sotto controllo effettuate modifiche (la data,
-                        la locazione e l&apos;autore della modifica)
-                    </li>
-                    <li>
                         pi&ugrave; precisa elaborazione degli spazi nelle codifice html e rappresentazioni a video dei glifi.
-                    </li>
-                    <li>
-                        Se una categoria va eliminata, togliere collegamenti da tutti i simboli ad essa.
                     </li>
                 </ol>
 
             </div>
             <div class="col-lg-4">
                 <h2>Commenti</h2>
+                <ol>
+                    <li>
+                        Tutte le modifiche vanno registrate. Vedi
+                        <?=
+                            Html::a('il registro', ['log/index']);
+                        ?>
+
+                    </li>
+                </ol>
 
 
 
