@@ -113,15 +113,8 @@ class SymbolController extends Controller
             if ($model->save()){
                 $idToInsert = [];
                 $key = 'category';  // key name corresponding to checked categories in the post array
-                if (array_key_exists($key, $post)){
-                    $categoryIds = $post[$key];
-                    if ($categoryIds){
-                        foreach ($categoryIds as $categoryId => $value) {
-                            $idToInsert[] = $categoryId;
-                        }
-                    }
-                }
-                $model->setLinksToCategories($idToInsert);
+                $categories = array_key_exists($key, $post) ? $post[$key] : [];
+                $model->setLinksToCategories($categories);
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {
@@ -157,16 +150,8 @@ class SymbolController extends Controller
             if ($model->save()){
                 $idToInsert = [];
                 $key = 'category';  // key name corresponding to checked categories in the post array
-                if (array_key_exists($key, $post)){
-                    $categoryIds = $post[$key];
-
-                    if ($categoryIds){
-                        foreach ($categoryIds as $categoryId => $value) {
-                            $idToInsert[] = $categoryId;
-                        }
-                    }
-                }
-                $model->setLinksToCategories($idToInsert);
+                $categories = array_key_exists($key, $post) ? $post[$key] : [];
+                $model->setLinksToCategories($categories);
                 return $this->redirect(['view', 'id' => $model->id]);
             }
             return $this->redirect(['view', 'id' => $model->id]);

@@ -104,7 +104,7 @@ class Symbol extends \yii\db\ActiveRecord
 
 
     /**
-     * Returns categories the symbol belongs to.
+     * Returns array of categories the symbol belongs to.
      * @return array   array of Category models
      */
     public function getCategories()
@@ -113,6 +113,24 @@ class Symbol extends \yii\db\ActiveRecord
                 ->viaTable('category_symbol', ['symbol_id' => 'id'])->all();
 
     }
+
+
+    /**
+     * Returns array of ids of the categories the symbol belongs to.
+     * @return array   array of integers
+     */
+    public function getIdsOfCategories()
+    {
+        $catModels = $this->getCategories();
+        $output = [];
+        if (!empty($catModels)){
+            foreach ($catModels as $catModel) {
+                $output[] = $catModel->id;
+            }
+        }
+        return $output;
+    }
+
 
     /**
      * Return a string with all categories the current symbol belongs to.
@@ -129,7 +147,10 @@ class Symbol extends \yii\db\ActiveRecord
         return implode(', ', $output);
     }
 
-
+    /*
+     * Array of all categories.
+     * @return Array
+     */
     public function getAllCategories()
     {
         return Category::find()->all();
@@ -151,32 +172,47 @@ class Symbol extends \yii\db\ActiveRecord
     }
 
     /**
-    * Sets records in category_symbol table:
-    * 1. removes all records having symbol_id equal to id of the current model,
-    * 2. for each element in $arr, pairs it with the id of the current element and
-    * inserts all these pairs into category_symbol table.
+    * Links current instance of Symbol class to an instance of Category class by means of CategorySymbol model.
+    * Input parameter is an array of the form [1221 => 1, 1222 => 1, ...],
+    * where keys correspond to category ids and values (in this case only one value (1) is present)
+    * correspond to a fact whether the current symbol belongs to category with the given id.
+    * Value 1 means that the current symbol belongs to the category, 0 - does not belong.
+    * (In fact, the array contains only those categories which the symbol belongs to.)
+    *
+    * The method checks what links are missing and saves them. It checks as well what links are
+    * excessive and deletes them.
+    * @var    $arr          hash which keys are ids of the categories to which current symbol must belong.
     * @return void
     */
     public function setLinksToCategories($arr)
     {
-        $tableName = 'category_symbol';
-        $id = $this->id;
-        // cleaning up table from records with given symbol_id
-        Yii::$app->db->createCommand("
-            DELETE FROM $tableName WHERE symbol_id = :sId",
-            [':sId' => $id])->execute();
-        // preparing data to insert
-        $arrToInsert = [];
-        foreach ($arr as $value) {
-            $catId = intval($value);
-            $arrToInsert[] = "($id, $catId)";
+        // ids of categories to which the symbol belongs currently
+        $catActual = $this->getIdsOfCategories();
+        // ids of categories to which the symbol must belong
+        $catMust = array_keys($arr);
+
+        // ids of categories to be deleted
+        $catsToDelete = array_diff($catActual, $catMust);
+        // ids of categories to be added
+        $catsToAdd    = array_diff($catMust, $catActual);
+        // id of current symbol
+        $symbolId = $this->id;
+
+        if (!empty($catsToDelete)){
+            foreach ($catsToDelete as $catToDelete) {
+                $modelToDelete = CategorySymbol::findByCategoryAndSymbol($catToDelete, $symbolId);
+                if ($modelToDelete){
+                    $modelToDelete->delete();
+                }
+            }
         }
-        $strToInsert = implode(', ', $arrToInsert);
-        // inserting
-        if ($strToInsert){
-            Yii::$app->db->createCommand(
-                "INSERT INTO category_symbol (symbol_id, cat_id) VALUES $strToInsert"
-            )->execute();
+        if (!empty($catsToAdd)){
+            foreach ($catsToAdd as $catToAdd) {
+                $modelToAdd = new CategorySymbol();
+                $modelToAdd->cat_id = intval($catToAdd);
+                $modelToAdd->symbol_id = intval($symbolId);
+                $modelToAdd->save();
+            }
         }
     }
 
